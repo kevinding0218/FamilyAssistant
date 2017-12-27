@@ -1,0 +1,10 @@
+G:\FamilyAssistant\FamilyAssistant\bin\Debug\netcoreapp2.0\FamilyAssistant.deps.json
+G:\FamilyAssistant\FamilyAssistant\bin\Debug\netcoreapp2.0\FamilyAssistant.runtimeconfig.json
+G:\FamilyAssistant\FamilyAssistant\bin\Debug\netcoreapp2.0\FamilyAssistant.runtimeconfig.dev.json
+G:\FamilyAssistant\FamilyAssistant\bin\Debug\netcoreapp2.0\FamilyAssistant.dll
+G:\FamilyAssistant\FamilyAssistant\bin\Debug\netcoreapp2.0\FamilyAssistant.pdb
+G:\FamilyAssistant\FamilyAssistant\obj\Debug\netcoreapp2.0\FamilyAssistant.csproj.CoreCompileInputs.cache
+G:\FamilyAssistant\FamilyAssistant\obj\Debug\netcoreapp2.0\FamilyAssistant.AssemblyInfoInputs.cache
+G:\FamilyAssistant\FamilyAssistant\obj\Debug\netcoreapp2.0\FamilyAssistant.AssemblyInfo.cs
+G:\FamilyAssistant\FamilyAssistant\obj\Debug\netcoreapp2.0\FamilyAssistant.dll
+G:\FamilyAssistant\FamilyAssistant\obj\Debug\netcoreapp2.0\FamilyAssistant.pdb
