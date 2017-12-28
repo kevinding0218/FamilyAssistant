@@ -4,19 +4,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 //Utility
 import { AppRoutingModule } from './app-routing.module';
-import { AppBootstrapModule } from "./module/app-bootstrap.module";
+import { AppNgxBootstrapModule } from "./module/app-ngx-bootstrap.module";
+import { AppNavMenuModule } from './module/app-nav-menu.module';
 //Object Component
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './navmenu/navmenu.component';
+
 import { VegetableComponent } from './vegetable/vegetable.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     VegetableComponent,
     DashboardComponent
   ],
@@ -25,7 +26,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    AppBootstrapModule
+    AppNgxBootstrapModule,
+    AppNavMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

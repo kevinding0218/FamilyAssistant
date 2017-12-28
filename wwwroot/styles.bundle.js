@@ -8,7 +8,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files \n@import './../vendor/bootstrap/css/bootstrap.min.css';\n@import './../vendor/font-awesome/css/font-awesome.css';\n*/", ""]);
 
 // exports
 
