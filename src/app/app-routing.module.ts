@@ -5,10 +5,34 @@ import { AppComponent } from './app.component';
 import { VegetableComponent } from "./vegetable/vegetable.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 
+// Import Containers
+import {
+  FullLayoutComponent,
+  SimpleLayoutComponent
+} from './containers';
+
+
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: DashboardComponent },
-  { path: 'vegetable', component: VegetableComponent }
+  { path: 'vegetable', component: VegetableComponent },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
+    component: FullLayoutComponent,
+    data: {
+      title: 'Home'
+    },
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+      }
+    ]
+  }
 ];
 
 @NgModule({

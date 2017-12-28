@@ -27,6 +27,7 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "moment": "2.19.1",
+    "ng2-charts": "1.6.0",
     "ngx-bootstrap": "^2.0.0-rc.0",
     "rxjs": "^5.5.2",
     "simple-line-icons": "^2.4.1",
