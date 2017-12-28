@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 //Object Component
 import { AppComponent } from './app.component';
-import { VegetableComponent } from "./vegetable/vegetable.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
 
 // Import Containers
 import {
@@ -13,12 +11,8 @@ import {
 
 
 const routes: Routes = [
-  { path: 'home', component: DashboardComponent },
-  { path: 'vegetable', component: VegetableComponent },
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
+    path: '', redirectTo: 'dashboard', pathMatch: 'full'
   },
   {
     path: '',
@@ -30,12 +24,32 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+      },
+      {
+        path: 'menu',
+        loadChildren: './views/menu/menu.module#MenusModule'
+      }
+    ]
+  },
+  {
+    path: 'pages',
+    component: SimpleLayoutComponent,
+    data: {
+      title: 'Pages'
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: './views/pages/pages.module#PagesModule',
       }
     ]
   }
 ];
 
 @NgModule({
+  declarations:[
+    
+  ],
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })

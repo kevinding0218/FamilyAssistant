@@ -3,15 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-//Utility
+//Routing
 import { AppRoutingModule } from './app-routing.module';
+//Utility
 import { AppNgxBootstrapModule } from "./module/app-ngx-bootstrap.module";
-import { AppNavMenuModule } from './module/app-nav-menu.module';
-//Object Component
+//App Component
 import { AppComponent } from './app.component';
-
-import { VegetableComponent } from './vegetable/vegetable.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 // Import containers
 import {
@@ -69,8 +66,6 @@ const APP_DIRECTIVES = [
 @NgModule({
   declarations: [
     AppComponent,
-    VegetableComponent,
-    DashboardComponent,
     ...APP_CONTAINERS,
     ...APP_COMPONENTS,
     ...APP_DIRECTIVES
@@ -80,8 +75,7 @@ const APP_DIRECTIVES = [
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    AppNgxBootstrapModule,
-    AppNavMenuModule
+    AppNgxBootstrapModule
   ],
   providers: [{
     provide: LocationStrategy,
