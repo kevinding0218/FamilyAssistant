@@ -35,6 +35,8 @@ $ git status
 --Send changes to the master branch of your remote repository:
 $ git push origin master
 --------------------------------------------------
+--Check out from github to local repository
+$ git checkout master
 --Pull/Check out a repository
 --Create a working copy of a local repository:
 $ git clone /path/to/repository
