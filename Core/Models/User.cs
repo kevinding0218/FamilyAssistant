@@ -1,3 +1,7 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace FamilyAssistant.Core.Models
 {
     [Table ("Users")]
@@ -16,6 +20,6 @@ namespace FamilyAssistant.Core.Models
 
         public bool? IsFAUser { get; set; }
 
-        public datetime LastLogIn { get; set; }
+        public DateTime LastLogIn { get; set; }
     }
 }
