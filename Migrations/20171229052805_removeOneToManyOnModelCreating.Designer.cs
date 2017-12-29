@@ -11,9 +11,10 @@ using System;
 namespace FamilyAssistant.Migrations
 {
     [DbContext(typeof(FaDbContext))]
-    partial class FaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171229052805_removeOneToManyOnModelCreating")]
+    partial class removeOneToManyOnModelCreating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

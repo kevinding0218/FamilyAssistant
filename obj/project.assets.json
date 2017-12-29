@@ -12604,7 +12604,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Kevin&&Lulu\\.nuget\\packages\\": {},
+    "C:\\Users\\KD\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -12613,14 +12613,14 @@
       "projectUniqueName": "G:\\FamilyAssistant\\FamilyAssistant\\FamilyAssistant.csproj",
       "projectName": "FamilyAssistant",
       "projectPath": "G:\\FamilyAssistant\\FamilyAssistant\\FamilyAssistant.csproj",
-      "packagesPath": "C:\\Users\\Kevin&&Lulu\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\KD\\.nuget\\packages\\",
       "outputPath": "G:\\FamilyAssistant\\FamilyAssistant\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Kevin&&Lulu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\KD\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

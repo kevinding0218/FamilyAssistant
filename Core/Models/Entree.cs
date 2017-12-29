@@ -16,14 +16,14 @@ namespace FamilyAssistant.Core.Models
         [StringLength(255)]
         public String Name { get; set; }
 
-        public ICollection<EntreeVege> Vegetables { get; set; }
+        public ICollection<EntreeVegetable> Vegetables { get; set; }
         public ICollection<EntreeMeat> Meats { get; set; }
         public int? BaseOptionId { get; set; }
         public BaseOption BaseOption { get; set; }
 
         public Entree()
         {
-          Vegetables = new Collection<EntreeVege>();
+          Vegetables = new Collection<EntreeVegetable>();
           Meats = new Collection<EntreeMeat>();
           BaseOption = new BaseOption();
         }

@@ -7,7 +7,8 @@ namespace FamilyAssistant.Core.Models
 {
     public class InsertLog
     {
-        public int AddedBy { get; set; }
         public DateTime AddedOn { get; set; }
+
+        public User AddedBy { get; set; }
     }
 }

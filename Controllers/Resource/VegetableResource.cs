@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FamilyAssistant.Core.Models;
 
 namespace FamilyAssistant.Controllers.Resource
 {
@@ -9,7 +10,7 @@ namespace FamilyAssistant.Controllers.Resource
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int AddedBy { get; set; }
         public DateTime AddedOn { get; set; }
+        public User AddedBy { get; set; }
     }
 }

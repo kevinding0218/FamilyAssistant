@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FamilyAssistant.Core.Models
 {
     [Table("EntreeVegetable")]
-    public class EntreeVege : InsertLog
+    public class EntreeVegetable : InsertLog
     {
         public int EntreeId { get; set; }
         public int VegeId { get; set; }

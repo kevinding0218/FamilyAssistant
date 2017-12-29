@@ -25,7 +25,7 @@ namespace FamilyAssistant.Controllers.ApiController
         [HttpGet("/api/vegetables")]
         public async Task<IEnumerable<VegetableResource>> GetVeges()
         {
-            var vegetables = await _context.Vegetables.ToListAsync();
+            var vegetables = await _context.Vegetables.Include(v => v.AddedBy).ToListAsync();
         
             return _mapper.Map<List<Vegetable>, List<VegetableResource>>(vegetables);
         }

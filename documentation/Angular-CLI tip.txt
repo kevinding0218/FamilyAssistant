@@ -1,4 +1,9 @@
 Angular CLI command
+--------------------------------------------------
+if ng is not found or recognized
+Adding C:\Users\DELL\AppData\Roaming\npm to System Variable Path worked for me. Please find your appropriate file path to 'npm'
+Also, check if you have added your angular-cli\bin path to the path variable.
+--------------------------------------------------
 -d: a preview that let you know what files are going to be generated or updated
 --------------------------------------------------
 Generating Component

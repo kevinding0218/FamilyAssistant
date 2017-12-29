@@ -11,9 +11,10 @@ using System;
 namespace FamilyAssistant.Migrations
 {
     [DbContext(typeof(FaDbContext))]
-    partial class FaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171229043252_SeedUserDataUpdateAddedByUserID")]
+    partial class SeedUserDataUpdateAddedByUserID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +86,7 @@ namespace FamilyAssistant.Migrations
                     b.ToTable("EntreeMeat");
                 });
 
-            modelBuilder.Entity("FamilyAssistant.Core.Models.EntreeVegetable", b =>
+            modelBuilder.Entity("FamilyAssistant.Core.Models.EntreeVege", b =>
                 {
                     b.Property<int>("EntreeId");
 
@@ -173,14 +174,14 @@ namespace FamilyAssistant.Migrations
             modelBuilder.Entity("FamilyAssistant.Core.Models.BaseOption", b =>
                 {
                     b.HasOne("FamilyAssistant.Core.Models.User", "AddedBy")
-                        .WithMany("AddedBaseOptions")
+                        .WithMany()
                         .HasForeignKey("AddedByUserID");
                 });
 
             modelBuilder.Entity("FamilyAssistant.Core.Models.Entree", b =>
                 {
                     b.HasOne("FamilyAssistant.Core.Models.User", "AddedBy")
-                        .WithMany("AddedEntrees")
+                        .WithMany()
                         .HasForeignKey("AddedByUserID");
 
                     b.HasOne("FamilyAssistant.Core.Models.BaseOption", "BaseOption")
@@ -191,7 +192,7 @@ namespace FamilyAssistant.Migrations
             modelBuilder.Entity("FamilyAssistant.Core.Models.EntreeMeat", b =>
                 {
                     b.HasOne("FamilyAssistant.Core.Models.User", "AddedBy")
-                        .WithMany("AddedEntreeMeats")
+                        .WithMany()
                         .HasForeignKey("AddedByUserID");
 
                     b.HasOne("FamilyAssistant.Core.Models.Entree", "Entree")
@@ -205,10 +206,10 @@ namespace FamilyAssistant.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("FamilyAssistant.Core.Models.EntreeVegetable", b =>
+            modelBuilder.Entity("FamilyAssistant.Core.Models.EntreeVege", b =>
                 {
                     b.HasOne("FamilyAssistant.Core.Models.User", "AddedBy")
-                        .WithMany("AddedEntreeVegetables")
+                        .WithMany()
                         .HasForeignKey("AddedByUserID");
 
                     b.HasOne("FamilyAssistant.Core.Models.Entree", "Entree")
@@ -225,14 +226,14 @@ namespace FamilyAssistant.Migrations
             modelBuilder.Entity("FamilyAssistant.Core.Models.Meat", b =>
                 {
                     b.HasOne("FamilyAssistant.Core.Models.User", "AddedBy")
-                        .WithMany("AddedMeats")
+                        .WithMany()
                         .HasForeignKey("AddedByUserID");
                 });
 
             modelBuilder.Entity("FamilyAssistant.Core.Models.Vegetable", b =>
                 {
                     b.HasOne("FamilyAssistant.Core.Models.User", "AddedBy")
-                        .WithMany("AddedVegetables")
+                        .WithMany("Vegetables")
                         .HasForeignKey("AddedByUserID");
                 });
 #pragma warning restore 612, 618
