@@ -99,6 +99,8 @@ namespace FamilyAssistant.Controllers.ApiController {
             // Insert into database by using Domain Model
             await _uow.CompleteAsync ();
 
+            // Fetch complete object from database
+            isExistedVegetable = await _vegeRepository.GetVegetable(isExistedVegetable.Id);
             // Convert from Domain Model to View Model
             var result = _mapper.Map<Vegetable, SaveVegetableResource> (isExistedVegetable);
 
