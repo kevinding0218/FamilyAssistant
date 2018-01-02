@@ -11,10 +11,12 @@ using Microsoft.Extensions.Options;
 using FamilyAssistant.Persistence;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using FamilyAssistant.Persistence.IRespository.Meal;
-using FamilyAssistant.Persistence.Repository.Meal;
 using FamilyAssistant.Persistence.IRespository;
 using FamilyAssistant.Persistence.Repository;
+using FamilyAssistant.Persistence.IRespository.Meal;
+using FamilyAssistant.Persistence.Repository.Meal;
+using FamilyAssistant.Persistence.IRespository.User;
+using FamilyAssistant.Persistence.Repository.User;
 
 namespace FamilyAssistant
 {
@@ -31,6 +33,7 @@ namespace FamilyAssistant
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IVegetableRepository, VegetableRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper();
