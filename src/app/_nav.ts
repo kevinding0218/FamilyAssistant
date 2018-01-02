@@ -9,13 +9,18 @@ export const navigation = [
     }
   },
   {
-    name: 'Menu',
-    url: '/menu',
+    name: 'Meal',
+    url: '/meal',
     icon: 'icon-puzzle',
     children: [
       {
         name: 'Vegetables',
-        url: '/menu/vegetables',
+        url: '/meal/vegetableList',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'NewVegetable',
+        url: '/meal/vegetableForm',
         icon: 'icon-puzzle'
       }
     ]

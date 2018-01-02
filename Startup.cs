@@ -11,6 +11,10 @@ using Microsoft.Extensions.Options;
 using FamilyAssistant.Persistence;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using FamilyAssistant.Persistence.IRespository.Meal;
+using FamilyAssistant.Persistence.Repository.Meal;
+using FamilyAssistant.Persistence.IRespository;
+using FamilyAssistant.Persistence.Repository;
 
 namespace FamilyAssistant
 {
@@ -26,8 +30,13 @@ namespace FamilyAssistant
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IVegetableRepository, VegetableRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddAutoMapper();
+
             services.AddDbContext<FaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
             services.AddMvc();
         }
 

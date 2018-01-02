@@ -26,8 +26,8 @@ const routes: Routes = [
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
       },
       {
-        path: 'menu',
-        loadChildren: './views/menu/menu.module#MenusModule'
+        path: 'meal',
+        loadChildren: './views/meal/meal.module#MealModule'
       }
     ]
   },

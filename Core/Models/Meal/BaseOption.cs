@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FamilyAssistant.Core.Models
+namespace FamilyAssistant.Core.Models.Meal
 {
-    public class BaseOption : InsertLog
+    public class BaseOption : TransLog
   {
         public int Id { get; set; }
 

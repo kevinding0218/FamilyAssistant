@@ -11,9 +11,10 @@ using System;
 namespace FamilyAssistant.Migrations
 {
     [DbContext(typeof(FaDbContext))]
-    partial class FaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171230032948_ReAddUserTable")]
+    partial class ReAddUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,10 +29,6 @@ namespace FamilyAssistant.Migrations
                     b.Property<int>("AddedByUserId");
 
                     b.Property<DateTime>("AddedOn");
-
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -52,10 +49,6 @@ namespace FamilyAssistant.Migrations
                     b.Property<DateTime>("AddedOn");
 
                     b.Property<int?>("BaseOptionId");
-
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -78,10 +71,6 @@ namespace FamilyAssistant.Migrations
 
                     b.Property<DateTime>("AddedOn");
 
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
-
                     b.Property<int>("Quantity");
 
                     b.HasKey("EntreeId", "MeatId");
@@ -101,10 +90,6 @@ namespace FamilyAssistant.Migrations
 
                     b.Property<DateTime>("AddedOn");
 
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
-
                     b.Property<int>("Quantity");
 
                     b.HasKey("EntreeId", "VegeId");
@@ -122,10 +107,6 @@ namespace FamilyAssistant.Migrations
                     b.Property<int>("AddedByUserId");
 
                     b.Property<DateTime>("AddedOn");
-
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -168,10 +149,6 @@ namespace FamilyAssistant.Migrations
                     b.Property<int>("AddedByUserId");
 
                     b.Property<DateTime>("AddedOn");
-
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
 
                     b.Property<string>("Name")
                         .IsRequired()

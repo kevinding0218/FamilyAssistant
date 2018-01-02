@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FamilyAssistant.Core.Models
+namespace FamilyAssistant.Core.Models.Meal
 {
     [Table("Entree")]
-    public class Entree : InsertLog
+    public class Entree : TransLog
     {
         public int Id { get; set; }
         [Required]

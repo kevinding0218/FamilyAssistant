@@ -11,9 +11,10 @@ using System;
 namespace FamilyAssistant.Migrations
 {
     [DbContext(typeof(FaDbContext))]
-    partial class FaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171230032831_RemoveKeyBetweenUser")]
+    partial class RemoveKeyBetweenUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,10 +29,6 @@ namespace FamilyAssistant.Migrations
                     b.Property<int>("AddedByUserId");
 
                     b.Property<DateTime>("AddedOn");
-
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -52,10 +49,6 @@ namespace FamilyAssistant.Migrations
                     b.Property<DateTime>("AddedOn");
 
                     b.Property<int?>("BaseOptionId");
-
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -78,10 +71,6 @@ namespace FamilyAssistant.Migrations
 
                     b.Property<DateTime>("AddedOn");
 
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
-
                     b.Property<int>("Quantity");
 
                     b.HasKey("EntreeId", "MeatId");
@@ -101,10 +90,6 @@ namespace FamilyAssistant.Migrations
 
                     b.Property<DateTime>("AddedOn");
 
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
-
                     b.Property<int>("Quantity");
 
                     b.HasKey("EntreeId", "VegeId");
@@ -123,10 +108,6 @@ namespace FamilyAssistant.Migrations
 
                     b.Property<DateTime>("AddedOn");
 
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -134,30 +115,6 @@ namespace FamilyAssistant.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Meat");
-                });
-
-            modelBuilder.Entity("FamilyAssistant.Core.Models.User", b =>
-                {
-                    b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<string>("FirstName")
-                        .HasMaxLength(30);
-
-                    b.Property<bool?>("IsFAUser");
-
-                    b.Property<DateTime>("LastLogIn");
-
-                    b.Property<string>("LastName")
-                        .HasMaxLength(30);
-
-                    b.HasKey("UserID");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("FamilyAssistant.Core.Models.Vegetable", b =>
@@ -168,10 +125,6 @@ namespace FamilyAssistant.Migrations
                     b.Property<int>("AddedByUserId");
 
                     b.Property<DateTime>("AddedOn");
-
-                    b.Property<DateTime?>("LastUpdatedByOn");
-
-                    b.Property<int?>("LastUpdatedByUserId");
 
                     b.Property<string>("Name")
                         .IsRequired()

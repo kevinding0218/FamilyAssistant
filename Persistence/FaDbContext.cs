@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FamilyAssistant.Core.Models;
+using FamilyAssistant.Core.Models.Meal;
 using Microsoft.EntityFrameworkCore;
 
 namespace FamilyAssistant.Persistence {
@@ -14,6 +14,7 @@ namespace FamilyAssistant.Persistence {
                 public DbSet<Entree> Entrees { get; set; }
                 public DbSet<Vegetable> Vegetables { get; set; }
                 public DbSet<Meat> Meats { get; set; }
+                public DbSet<User> Users { get; set; }
 
                 protected override void OnModelCreating (ModelBuilder modelBuilder) {
                         //One to One

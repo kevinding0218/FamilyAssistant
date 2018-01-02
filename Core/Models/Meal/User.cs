@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FamilyAssistant.Core.Models
+namespace FamilyAssistant.Core.Models.Meal
 {
     [Table ("Users")]
     public class User {
@@ -29,11 +30,9 @@ namespace FamilyAssistant.Core.Models
         [Column(Order = 5)]
         public DateTime LastLogIn { get; set; }
 
-        public ICollection<Vegetable> AddedVegetables { get; set; }
-        public ICollection<Meat> AddedMeats { get; set; }
-        public ICollection<Entree> AddedEntrees { get; set; }
-        public ICollection<EntreeVegetable> AddedEntreeVegetables { get; set; }
-        public ICollection<EntreeMeat> AddedEntreeMeats { get; set; }
-        public ICollection<BaseOption> AddedBaseOptions { get; set; }
+        public User()
+        {
+            
+        }
     }
 }

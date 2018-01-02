@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FamilyAssistant.Core.Models
+namespace FamilyAssistant.Core.Models.Meal
 {
-    [Table("Vegetable")]
-    public class Vegetable : InsertLog
+    [Table("Meat")]
+    public class Meat : TransLog
     {
         public int Id { get; set; }
 
