@@ -14,6 +14,7 @@ namespace FamilyAssistant.Controllers.Resource.Meal
         
         public DateTime? LastUpdatedByOn { get; set; }
 
+        public int AddedByUserId { get; set; }
         public string AddedByUserName { get; set; }  
         
         public int NumberOfEntreeIncluded { get; set; }

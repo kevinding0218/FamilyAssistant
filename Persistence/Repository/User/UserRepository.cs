@@ -13,5 +13,15 @@ namespace FamilyAssistant.Persistence.Repository.User {
         public async Task<bool> IsExistedUser (int userId) {
             return await _context.Users.AnyAsync (u => u.UserID == userId);
         }
+
+        public async Task<string> GetUserFullName (int userId) {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserID == userId);
+
+            if (user != null) {
+                return string.Format("{0} {1}", user.FirstName, user.LastName);
+            } else {
+                return "User Not Found";
+            }
+        }
     }
 }

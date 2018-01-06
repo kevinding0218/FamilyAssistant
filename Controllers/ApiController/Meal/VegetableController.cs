@@ -27,12 +27,22 @@ namespace FamilyAssistant.Controllers.ApiController {
             this._mapper = mapper;
         }
 
-        /*  [HttpGet ()]
-         public async Task<IEnumerable<SaveVegetableResource>> GetVegetables () {
-             var vegetables = _vegeRepository.GetVegetables();
+        [HttpGet ()]
+         public async Task<IEnumerable<GridVegetableResource>> GetVegetables () {
+             var vegetables = await _vegeRepository.GetVegetables();
 
-             return _mapper.Map<List<Vegetable>, List<SaveVegetableResource>> (vegetables);
-         } */
+             var gridVegetables = _mapper.Map<List<Vegetable>, List<GridVegetableResource>>(vegetables);
+
+             foreach(var gridVege in gridVegetables) {
+                 var AddedByUserId = gridVege.AddedByUserId;
+                 var VegeId = gridVege.vegetableKeyValuePairInfo.Id;
+
+                 gridVege.AddedByUserName = await _userRepository.GetUserFullName(AddedByUserId);
+                 gridVege.NumberOfEntreeIncluded = await _vegeRepository.GetNumberOfEntreesWithVege(VegeId);
+             }
+
+             return gridVegetables;     
+         }
 
         [HttpGet ("{id}")]
         public async Task<IActionResult> GetVegetable (int id) {
