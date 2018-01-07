@@ -35,44 +35,39 @@ namespace FamilyAssistant.Persistence.Repository.Meal {
         public async Task<int> GetNumberOfEntreesWithVege (int vegeId) {
             int numberOfEntreeWithVege = -1;
 
-            try {
-                await _context.LoadStoredProc ("dbo.GetNumberOfEntreeByVegeId")
-                    .WithSqlParam ("VegeId", vegeId)
-                    .ExecuteStoredProcAsync ((handler) => {
-                        numberOfEntreeWithVege = handler.ReadToValue<int> () ?? default(int);;
-                        // do something with your results.
-                    });
+            await _context.LoadStoredProc ("dbo.GetNumberOfEntreeByVegeId")
+                .WithSqlParam ("VegeId", vegeId)
+                .ExecuteStoredProcAsync ((handler) => {
+                    numberOfEntreeWithVege = handler.ReadToValue<int> () ?? default (int);;
+                    // do something with your results.
+                });
 
-                /*  await _context.LoadSQLText ("SELECT COUNT(*) AS TotalEntrees FROM EntreeVegetable WHERE VegeId = " + vegeId.ToString ())
-                     .ExecuteSQLTextAsync ((handler) => {
-                         numberOfEntreeWithVege = handler.ReadToValue<int>() ?? default(int);;
-                         // do something with your results.
-                     }); */
+            /*  await _context.LoadSQLText ("SELECT COUNT(*) AS TotalEntrees FROM EntreeVegetable WHERE VegeId = " + vegeId.ToString ())
+                 .ExecuteSQLTextAsync ((handler) => {
+                     numberOfEntreeWithVege = handler.ReadToValue<int>() ?? default(int);;
+                     // do something with your results.
+                 }); */
 
-                /*  
-                 var conn = _context.Database.GetDbConnection();
-                 await conn.OpenAsync();
-                 using (var command = conn.CreateCommand())
+            /*  
+             var conn = _context.Database.GetDbConnection();
+             await conn.OpenAsync();
+             using (var command = conn.CreateCommand())
+             {
+                 string query = "SELECT COUNT(*) AS TotalEntrees FROM EntreeVegetable WHERE VegeId = " + vegeId.ToString();
+                 command.CommandText = query;
+                 System.Data.Common.DbDataReader reader = await command.ExecuteReaderAsync();
+
+                 if (reader.HasRows)
                  {
-                     string query = "SELECT COUNT(*) AS TotalEntrees FROM EntreeVegetable WHERE VegeId = " + vegeId.ToString();
-                     command.CommandText = query;
-                     System.Data.Common.DbDataReader reader = await command.ExecuteReaderAsync();
-
-                     if (reader.HasRows)
+                     while (await reader.ReadAsync())
                      {
-                         while (await reader.ReadAsync())
-                         {
-                             numberOfEntreeWithVege = reader.GetInt32(0);
-                         }
+                         numberOfEntreeWithVege = reader.GetInt32(0);
                      }
-                     reader.Dispose();
-                 } 
-                 conn.Close(); */
-            } catch (Exception ex)
-            {
-                throw;  
-            }  
-            return numberOfEntreeWithVege;       
+                 }
+                 reader.Dispose();
+             } 
+             conn.Close(); */
+            return numberOfEntreeWithVege;
         }
     }
 }

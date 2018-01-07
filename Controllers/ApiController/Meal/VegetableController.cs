@@ -9,10 +9,12 @@ using FamilyAssistant.Persistence;
 using FamilyAssistant.Persistence.IRespository;
 using FamilyAssistant.Persistence.IRespository.Meal;
 using FamilyAssistant.Persistence.IRespository.User;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FamilyAssistant.Controllers.ApiController {
+    [EnableCors("SiteCorsPolicy")]
     [Route ("/api/vegetable")]
     public class VegetableController : Controller {
         private readonly IMapper _mapper;
