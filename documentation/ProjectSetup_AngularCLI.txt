@@ -465,7 +465,9 @@ Use dotnet run will not load bootstrap from angular-cli.json
 Use dotnet run will not be reference by client app change
 Use webpack will not have latest client app change
 Only ng serve + dotnet run works
-
+---------------------------
+/* npm install --save @types/toastr */
+npm install ngx-toastr --save
 
 
 
