@@ -27,10 +27,7 @@ export class VegetableFormComponent implements OnInit {
   submit() {  
      this._vegetableService.create(this.vegetable)
       .subscribe(
-        x => console.log(x),
-        err => {
-          this.toastr.error('Error!', 'An unexpected error happened!');
-        }
+        x => console.log(x)
       ); 
   }
 

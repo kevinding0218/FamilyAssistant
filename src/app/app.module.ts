@@ -1,12 +1,15 @@
 import { HttpModule } from '@angular/http';
+import { ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { AppErrorHandler } from './eventHandler/app.error-handler';
 //Routing
 import { AppRoutingModule } from './app-routing.module';
 //Utility
-import { AppNgxBootstrapModule } from "./module/app-ngx-bootstrap.module";
+import { AppNgxBootstrapModule } from "./ngxModule/app-ngx-bootstrap.module";
 //App Component
 import { AppComponent } from './app.component';
 
@@ -72,15 +75,22 @@ const APP_DIRECTIVES = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
     AppNgxBootstrapModule
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }],
+  providers: [
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    },
+    {
+      provide: ErrorHandler, 
+      useClass: AppErrorHandler
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
