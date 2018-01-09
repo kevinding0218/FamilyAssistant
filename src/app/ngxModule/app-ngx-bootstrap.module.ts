@@ -14,7 +14,8 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
-      closeButton: true
+      closeButton: true,
+      progressAnimation: 'increasing'
     })
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, ToastrModule]

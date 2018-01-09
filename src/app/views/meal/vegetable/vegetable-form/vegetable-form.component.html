@@ -2,30 +2,36 @@
 <p>
   {{vegetable | json}}
 </p>
-<form #f="ngForm" novalidate>
+<pre>{{f.value | json}}</pre>
+<span>{{ f.valid }}</span>
 <div class="card">
   <div class="card-header">
     <strong>Add New Vegetable</strong>
   </div>
   <div class="card-body">
-    <form class="form-horizontal">
+    <form #f="ngForm" novalidate class="form-horizontal">
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="txtVegetableName">Vegetable Name</label>
-        <div class="col-md-9">
-          <input type="text" id="vegetableName" [(ngModel)]="vegetable.keyValuePairInfo.name" name="vegetableName" class="form-control"
-            placeholder="Enter Name.." required #vegetableName="ngModel">
-          <div class="alert alert-danger" *ngIf="vegetableName.touched && !vegetableName.valid">Name is Required!</div>
+        <div class="col-md-6">
+          <input type="text" id="vegetableName" class="form-control" placeholder="Enter Name.." 
+          [(ngModel)]="vegetable.keyValuePairInfo.name" name="vegetableName" required #vegetableName="ngModel">
+        </div>
+        <div class="col-md-3">
+          <label class="col-form-label" *ngIf="(vegetableName.dirty || vegetableName.touched) && vegetableName.invalid">
+            <span class="alert alert-danger">Name is Required!</span>
+          </label>      
         </div>
       </div>
     </form>
   </div>
   <div class="card-footer">
     <div class="pull-right">
-      <button type="submit" class="btn btn-sm btn-success" (click)="submit()" [disabled]="!f.valid">
+      <button type="submit" class="btn btn-sm btn-success" (click)="this.submit()" [disabled]="!f.valid">
         <i class="fa fa-dot-circle-o"></i> Submit</button>
-      <button type="button" class="btn btn-sm btn-danger" (click)="getVegetable()">
+      <button type="reset" class="btn btn-sm btn-primary" (click)="checkFormValue(f)">
         <i class="fa fa-ban"></i> Reset</button>
+      <button type="button" class="btn btn-sm btn-danger" (click)="this.deleteVegetable()">
+          <i class="fa fa-remove"></i> Delete</button>
     </div>
   </div>
 </div>
-</form>

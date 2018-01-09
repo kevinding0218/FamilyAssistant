@@ -19,8 +19,8 @@ export const navigation = [
         icon: 'icon-puzzle'
       },
       {
-        name: 'NewVegetable',
-        url: '/meal/vegetableForm',
+        name: 'New Vegetable',
+        url: '/meal/vegetableForm/new',
         icon: 'icon-puzzle'
       }
     ]

@@ -9,7 +9,7 @@ namespace FamilyAssistant.Controllers.Resource.Meal
 {
     public class GridVegetableResource
     {
-        public KeyValuePairResource vegetableKeyValuePairInfo { get; set; }
+        public KeyValuePairResource keyValuePairInfo { get; set; }
         public DateTime AddedOn { get; set; }
         
         public DateTime? LastUpdatedByOn { get; set; }

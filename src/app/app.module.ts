@@ -58,6 +58,7 @@ import {
   ReplaceDirective,
   SIDEBAR_TOGGLE_DIRECTIVES
 } from './directives';
+import { ErrorLogService } from './services/event/error.log.service';
 
 const APP_DIRECTIVES = [
   AsideToggleDirective,
@@ -89,7 +90,8 @@ const APP_DIRECTIVES = [
     {
       provide: ErrorHandler, 
       useClass: AppErrorHandler
-    }
+    },
+    ErrorLogService
   ],
   bootstrap: [AppComponent]
 })

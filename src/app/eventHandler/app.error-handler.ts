@@ -1,11 +1,16 @@
 import { ErrorHandler, Inject, Injector, NgZone, isDevMode } from "@angular/core";
 import { Response } from "@angular/http";
 import { ToastrService } from "ngx-toastr";
+import { ErrorLogService } from "../services/event/error.log.service";
 
 // import * as Raven from 'raven-js'
 
 export class AppErrorHandler implements ErrorHandler {
-    constructor(@Inject(NgZone) private ngZone: NgZone, @Inject(Injector) private injector: Injector) { }
+    constructor(
+        @Inject(NgZone) private ngZone: NgZone, 
+        @Inject(Injector) private injector: Injector,
+        @Inject(ErrorLogService) private errorLogService: ErrorLogService
+    ) { }
 
     private get toastr(): ToastrService {
         return this.injector.get(ToastrService);
@@ -13,33 +18,14 @@ export class AppErrorHandler implements ErrorHandler {
 
     public handleError(error: any): void {
         this.ngZone.run(() => {
-            let errorTitle = 'Error';
-            let errMsg = 'An unexpected error ocurred';
+            this.errorLogService.logError(error);
 
-            if (error instanceof Response) {
-                const contentType = error.headers.get("Content-Type")
-
-                if (contentType && contentType == "application/json") {
-                    const body = error.json();
-                    errorTitle = body.message || errorTitle;
-                    errMsg = body.detailedMessage || JSON.stringify(body);
-                } else {
-                    errMsg = error.text();
-                }
-            }
             this.toastr.error(
-                errMsg,
-                errorTitle
+                error.message,
+                'Error'
             );
         });
 
-        console.log('handleError');
-        console.log(error);
-
-        if (!isDevMode())
-            throw error;
-        else
-            throw error;
-
+        //throw error;
     }
 }

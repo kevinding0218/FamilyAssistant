@@ -16,16 +16,16 @@ namespace FamilyAssistant.Mapping
             // Domain to API Resource/View Model
             this.CreateMap<Vegetable, SaveVegetableResource>()
                 .ForMember
-                (svr => svr.vegetableKeyValuePairInfo, opt => opt.MapFrom(v => new KeyValuePairResource {Id = v.Id,Name = v.Name}));
+                (svr => svr.keyValuePairInfo, opt => opt.MapFrom(v => new KeyValuePairResource {Id = v.Id,Name = v.Name}));
             this.CreateMap<Vegetable, GridVegetableResource>()
-                .ForMember(svr => svr.NumberOfEntreeIncluded, opt => opt.Ignore())
+                .ForMember(gvr => gvr.NumberOfEntreeIncluded, opt => opt.Ignore())
                 .ForMember
-                (svr => svr.vegetableKeyValuePairInfo, opt => opt.MapFrom(v => new KeyValuePairResource {Id = v.Id,Name = v.Name}));
+                (gvr => gvr.keyValuePairInfo, opt => opt.MapFrom(v => new KeyValuePairResource {Id = v.Id,Name = v.Name}));
 
             // API Resource/View Model to Domain
             this.CreateMap<SaveVegetableResource, Vegetable>()
                     .ForMember(v => v.Id, opt => opt.Ignore())
-                    .ForMember(v => v.Name, opt => opt.MapFrom(svr => svr.vegetableKeyValuePairInfo.Name));
+                    .ForMember(v => v.Name, opt => opt.MapFrom(svr => svr.keyValuePairInfo.Name));
         }
     }
 }

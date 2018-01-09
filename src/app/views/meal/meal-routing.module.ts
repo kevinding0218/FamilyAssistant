@@ -18,7 +18,14 @@ const routes: Routes = [
         }
       },
       {
-        path: 'vegetableForm',
+        path: 'vegetableForm/new',
+        component: VegetableFormComponent,
+        data: {
+          title: 'New Vegetable'
+        }
+      },
+      {
+        path: 'vegetableForm/:id',
         component: VegetableFormComponent,
         data: {
           title: 'New Vegetable'

@@ -29,7 +29,7 @@ namespace FamilyAssistant.Controllers.ApiController {
             this._mapper = mapper;
         }
 
-        [HttpGet ()]
+        [HttpGet]
          public async Task<IEnumerable<GridVegetableResource>> GetVegetables () {
              var vegetables = await _vegeRepository.GetVegetables();
 
@@ -37,7 +37,7 @@ namespace FamilyAssistant.Controllers.ApiController {
 
              foreach(var gridVege in gridVegetables) {
                  var AddedByUserId = gridVege.AddedByUserId;
-                 var VegeId = gridVege.vegetableKeyValuePairInfo.Id;
+                 var VegeId = gridVege.keyValuePairInfo.Id;
 
                  gridVege.AddedByUserName = await _userRepository.GetUserFullName(AddedByUserId);
                  gridVege.NumberOfEntreeIncluded = await _vegeRepository.GetNumberOfEntreesWithVege(VegeId);
@@ -59,23 +59,23 @@ namespace FamilyAssistant.Controllers.ApiController {
             return Ok (result);
         }
 
-        [HttpPost ()]
-        public async Task<IActionResult> CreateVegetable ([FromBody] SaveVegetableResource newSaveVegetableResource) {
+        [HttpPost]
+        public async Task<IActionResult> CreateVegetable ([FromBody] SaveVegetableResource newVegetableResource) {
             if (!ModelState.IsValid)
                 return BadRequest (ModelState);
 
-            if (await _userRepository.IsExistedUser(newSaveVegetableResource.AddedByUserId)) {
+            if (!await _userRepository.IsExistedUser(newVegetableResource.AddedByUserId)) {
                 ModelState.AddModelError ("NonExistedUser", "User Not Found!");
                 return BadRequest (ModelState);
             }
 
-            if (await _vegeRepository.IsDuplicateVegetable (newSaveVegetableResource.vegetableKeyValuePairInfo.Name)) {
-                ModelState.AddModelError ("DuplicateVegetable", newSaveVegetableResource.vegetableKeyValuePairInfo.Name + " already existed!");
+            if (await _vegeRepository.IsDuplicateVegetable (newVegetableResource.keyValuePairInfo.Name)) {
+                ModelState.AddModelError ("DuplicateVegetable", newVegetableResource.keyValuePairInfo.Name + " already existed!");
                 return BadRequest (ModelState);
             }
 
             // Convert from View Model to Domain Model
-            var newVegetable = _mapper.Map<SaveVegetableResource, Vegetable> (newSaveVegetableResource);
+            var newVegetable = _mapper.Map<SaveVegetableResource, Vegetable> (newVegetableResource);
             newVegetable.AddedOn = DateTime.Now;
 
             // Insert into database by using Domain Model
@@ -99,8 +99,8 @@ namespace FamilyAssistant.Controllers.ApiController {
             if (isExistedVegetable == null)
                 return NotFound ();
 
-            if (await _vegeRepository.IsDuplicateVegetable (SaveVegetableResource.vegetableKeyValuePairInfo.Name)) {
-                ModelState.AddModelError ("DuplicateVegetable", SaveVegetableResource.vegetableKeyValuePairInfo.Name + " already existed!");
+            if (await _vegeRepository.IsDuplicateVegetable (SaveVegetableResource.keyValuePairInfo.Name)) {
+                ModelState.AddModelError ("DuplicateVegetable", SaveVegetableResource.keyValuePairInfo.Name + " already existed!");
                 return BadRequest (ModelState);
             }
 
