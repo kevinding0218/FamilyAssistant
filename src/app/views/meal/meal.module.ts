@@ -1,3 +1,4 @@
+import { PaginationComponent } from './../../components/table-pagination/pagination.component';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,8 @@ import { VegetableService } from './../../services/meal/vegetable/vegetable.serv
   imports: [ FormsModule, CommonModule, MealRoutingModule ],
   declarations: [
     VegetableListComponent,
-    VegetableFormComponent
+    VegetableFormComponent,
+    PaginationComponent
   ],
   providers: [ VegetableService ]
 })

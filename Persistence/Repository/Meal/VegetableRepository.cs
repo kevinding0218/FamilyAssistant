@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FamilyAssistant.Core.Models.Meal;
+using FamilyAssistant.Core.Query;
+using FamilyAssistant.Extensions;
 using FamilyAssistant.Persistence.IRespository.Meal;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,8 +21,34 @@ namespace FamilyAssistant.Persistence.Repository.Meal {
             return await _context.Vegetables.AnyAsync (v => v.Name == name);
         }
 
-        public async Task<List<Vegetable>> GetVegetables () {
-            return await _context.Vegetables.ToListAsync ();
+        public async Task<QueryResult<Vegetable>> GetVegetables (VegetableQuery queryObj) {
+            var result = new QueryResult<Vegetable>();
+            var query =  _context.Vegetables.AsQueryable();
+
+/*             if (queryObj.VegetableId.HasValue)
+                query = query.Where(vege => vege.Id == queryObj.VegetableId);
+
+            if (queryObj.SortBy == "name")
+                query = (queryObj.IsSortAscending) ? query.OrderBy(vege => vege.Name) : query.OrderByDescending(vege => vege.Name); */
+
+            var columnsMap = new Dictionary<string, Expression<Func<Vegetable, object>>>()
+            {
+                ["name"] = v => v.Name,
+                ["addedOn"] = v => v.AddedOn,
+                ["updatedOn"] = v => v.LastUpdatedByOn
+            };
+            //columnsMap.Add("make", v => v.Model.Make.Name);
+            //query = ApplyOrdering(queryObj, query, columnsMap);
+            query = query.ApplyOrdering(queryObj, columnsMap);
+
+            result.TotalItems = await query.CountAsync();
+
+            //query = query.ApplyPaging(queryObj);
+
+            //return await query.ToListAsync();
+            result.Items = await query.ToListAsync();
+
+            return result;
         }
         public async Task<Vegetable> GetVegetable (int id) {
             return await _context.Vegetables.SingleOrDefaultAsync (v => v.Id == id);

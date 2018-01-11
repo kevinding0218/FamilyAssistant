@@ -33,4 +33,21 @@ export class VegetableService {
     return this._http.delete(this.apiEndPoint + '/' + id)
       .map(res => res.json());
   }
+
+  getVegetables(filter) {
+    return this._http.get(this.apiEndPoint + '?' + this.toQueryString(filter))
+      .map(res => res.json());
+  }
+
+  toQueryString(obj) {
+    // prop = value&
+    var parts = [];
+    for (var property in obj) {
+        var value = obj[property];
+        if (value != null && value != undefined)
+            parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
+    }
+
+    return parts.join('&');
+}
 }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FamilyAssistant.Controllers.Resource.Shared;
+using FamilyAssistant.Controllers.Resource.Query;
+using FamilyAssistant.Core.Query;
 
 namespace FamilyAssistant.Mapping
 {
@@ -14,6 +16,7 @@ namespace FamilyAssistant.Mapping
         public MappingProfile()
         {
             // Domain to API Resource/View Model
+            CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             this.CreateMap<Vegetable, SaveVegetableResource>()
                 .ForMember
                 (svr => svr.keyValuePairInfo, opt => opt.MapFrom(v => new KeyValuePairResource {Id = v.Id,Name = v.Name}));
@@ -23,6 +26,7 @@ namespace FamilyAssistant.Mapping
                 (gvr => gvr.keyValuePairInfo, opt => opt.MapFrom(v => new KeyValuePairResource {Id = v.Id,Name = v.Name}));
 
             // API Resource/View Model to Domain
+            this.CreateMap<VegetableQueryResource, VegetableQuery>();
             this.CreateMap<SaveVegetableResource, Vegetable>()
                     .ForMember(v => v.Id, opt => opt.Ignore())
                     .ForMember(v => v.Name, opt => opt.MapFrom(svr => svr.keyValuePairInfo.Name));

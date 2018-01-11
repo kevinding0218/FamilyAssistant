@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using FamilyAssistant.Controllers.Resource.Meal;
+using FamilyAssistant.Controllers.Resource.Query;
 using FamilyAssistant.Core.Models.Meal;
+using FamilyAssistant.Core.Query;
+using FamilyAssistant.Extensions;
 using FamilyAssistant.Persistence;
 using FamilyAssistant.Persistence.IRespository;
 using FamilyAssistant.Persistence.IRespository.Meal;
@@ -29,23 +33,44 @@ namespace FamilyAssistant.Controllers.ApiController {
             this._mapper = mapper;
         }
 
+        #region READ LIST OF OBJECTS
         [HttpGet]
-         public async Task<IEnumerable<GridVegetableResource>> GetVegetables () {
-             var vegetables = await _vegeRepository.GetVegetables();
+         public async Task<QueryResultResource<GridVegetableResource>> GetVegetables (VegetableQueryResource filterResource) {
+             var result = new QueryResultResource<GridVegetableResource>();
+             var filter = _mapper.Map<VegetableQueryResource, VegetableQuery>(filterResource);
 
-             var gridVegetables = _mapper.Map<List<Vegetable>, List<GridVegetableResource>>(vegetables);
+            var queryResult = await _vegeRepository.GetVegetables(filter);
+            result.TotalItems = queryResult.TotalItems;
+            var queryResultResource = _mapper.Map<QueryResult<Vegetable>, QueryResultResource<GridVegetableResource>>(queryResult);
 
-             foreach(var gridVege in gridVegetables) {
-                 var AddedByUserId = gridVege.AddedByUserId;
-                 var VegeId = gridVege.keyValuePairInfo.Id;
+            #region  Apply additional fields to Result and apply sorting/paging
+            var queryResultItemsQueryable = queryResultResource.Items.AsQueryable();
 
-                 gridVege.AddedByUserName = await _userRepository.GetUserFullName(AddedByUserId);
-                 gridVege.NumberOfEntreeIncluded = await _vegeRepository.GetNumberOfEntreesWithVege(VegeId);
-             }
+            foreach(var gridVegetable in queryResultItemsQueryable)
+            {
+                 var AddedByUserId = gridVegetable.AddedByUserId;
+                 var VegeId = gridVegetable.keyValuePairInfo.Id;
 
-             return gridVegetables;     
+                 gridVegetable.AddedByUserName = await _userRepository.GetUserFullName(AddedByUserId);
+                 gridVegetable.NumberOfEntreeIncluded = await _vegeRepository.GetNumberOfEntreesWithVege(VegeId);
+            }
+
+            var columnsMap = new Dictionary<string, Expression<Func<GridVegetableResource, object>>>()
+            {
+                ["addedBy"] = gv => gv.AddedByUserName,
+                ["entreesIncluded"] = gv => gv.NumberOfEntreeIncluded
+            };
+
+            queryResultItemsQueryable = queryResultItemsQueryable.ApplyOrdering(filter, columnsMap);
+            queryResultItemsQueryable = queryResultItemsQueryable.ApplyPaging(filter);
+            result.Items = queryResultItemsQueryable.ToList();
+            #endregion
+
+            return result;
          }
+         #endregion
 
+        #region  READ SINGLE OBJECT
         [HttpGet ("{id}")]
         public async Task<IActionResult> GetVegetable (int id) {
             var isExistedVegetable = await _vegeRepository.GetVegetable (id);
@@ -58,7 +83,9 @@ namespace FamilyAssistant.Controllers.ApiController {
             // Return view Model
             return Ok (result);
         }
+        #endregion
 
+        #region CREATE
         [HttpPost]
         public async Task<IActionResult> CreateVegetable ([FromBody] SaveVegetableResource newVegetableResource) {
             if (!ModelState.IsValid)
@@ -89,7 +116,9 @@ namespace FamilyAssistant.Controllers.ApiController {
             // Return view Model
             return Ok (result);
         }
+        #endregion
 
+        #region  UPDATE
         [HttpPut ("{id}")] //api/vegetable/id
         public async Task<IActionResult> UpdateVegetable (int id, [FromBody] SaveVegetableResource SaveVegetableResource) {
             if (!ModelState.IsValid)
@@ -119,7 +148,9 @@ namespace FamilyAssistant.Controllers.ApiController {
             // Return view Model
             return Ok (result);
         }
+        #endregion
 
+        #region  DELETE
         [HttpDelete ("{id}")] //api/vegetable/id
         public async Task<IActionResult> DeleteVegetable (int id) {
             var existedVegetable = await _vegeRepository.GetVegetable (id);
@@ -131,5 +162,6 @@ namespace FamilyAssistant.Controllers.ApiController {
 
             return Ok (id);
         }
+        #endregion
     }
 }

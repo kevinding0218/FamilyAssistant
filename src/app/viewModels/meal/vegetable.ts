@@ -10,3 +10,11 @@ export interface SaveVegetable {
     updatedOn: Date;
     lastUpdatedByUserId: number;
 }
+
+export interface GridVegetable {
+    keyValuePairInfo: KeyValuePairInfo;
+    addedOn: Date;
+    addedByUserName: string;
+    numberOfEntreeIncluded: number;
+    lastUpdatedByOn: Date;
+}

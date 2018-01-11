@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace FamilyAssistant.Persistence {
+namespace FamilyAssistant.Extensions {
     public static class EFExtensions {
         /// <summary>
         /// Creates an initial DbCommand object based on a sql plain text
