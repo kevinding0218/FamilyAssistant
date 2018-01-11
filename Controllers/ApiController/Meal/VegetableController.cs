@@ -63,6 +63,7 @@ namespace FamilyAssistant.Controllers.ApiController {
 
             queryResultItemsQueryable = queryResultItemsQueryable.ApplyOrdering(filter, columnsMap);
             queryResultItemsQueryable = queryResultItemsQueryable.ApplyPaging(filter);
+            //ToListAsync and CountAsync only works for EF query which is like _context.Objects, etc
             result.Items = queryResultItemsQueryable.ToList();
             #endregion
 
