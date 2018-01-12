@@ -4,6 +4,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
@@ -16,8 +17,9 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-top-right',
       closeButton: true,
       progressAnimation: 'increasing'
-    })
+    }),
+    NgxDatatableModule
   ],
-  exports: [BsDropdownModule, TooltipModule, ModalModule, ToastrModule]
+  exports: [BsDropdownModule, TooltipModule, ModalModule, ToastrModule, NgxDatatableModule]
 })
 export class AppNgxBootstrapModule { }

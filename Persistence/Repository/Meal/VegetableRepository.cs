@@ -46,7 +46,7 @@ namespace FamilyAssistant.Persistence.Repository.Meal {
             //query = query.ApplyPaging(queryObj);
 
             //return await query.ToListAsync();
-            result.Items = await query.ToListAsync();
+            result.TotalItemList = result.Items = await query.ToListAsync();
 
             return result;
         }

@@ -59,3 +59,49 @@
       </div>
     </div>
   </div>
+
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> List of Vegetables
+          </div>
+          <div class="card-body">
+            <ngx-datatable #myTable class="bootstrap expandable" [rows]="ngx_rows" [loadingIndicator]="ngx_loadingIndicator" [columnMode]="'force'"
+              [headerHeight]="40" [footerHeight]="40" [limit]="3" [rowHeight]="'auto'" [reorderable]="ngx_reorderable" (page)="onPage($event)">
+              <!-- Row Detail Template -->
+              <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                  <div style="padding-left:35px;">
+                    <ul>
+                      <li *ngFor="let entree of row.entrees; let i = index">
+                        {{i + 1}} - {{entree}}
+                      </li>
+                    </ul>
+                  </div>
+                </ng-template>
+              </ngx-datatable-row-detail>
+              <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false" [canAutoResize]="false">
+                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                  <a  *ngIf="row.numberOfEntreeIncluded > 0" href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
+                    (click)="toggleExpandRow(row,expanded)">
+                  </a>
+                </ng-template>
+              </ngx-datatable-column>
+              <div *ngFor="let c of ngx_columns">
+                <ngx-datatable-column [name]="c.name" sortable="false" [prop]="c.prop"></ngx-datatable-column>
+              </div>
+              <ngx-datatable-column name="Actions" sortable="false" prop="keyValuePairInfo.id">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <button md-icon-button class="btn btn-success" (click)="editVegetable(value)">
+                    <i class="fa fa-edit"></i>Edit
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -10,13 +10,14 @@ namespace FamilyAssistant.Controllers.Resource.Meal
     public class GridVegetableResource
     {
         public KeyValuePairResource keyValuePairInfo { get; set; }
-        public DateTime AddedOn { get; set; }
+        public String AddedOn { get; set; }
         
-        public DateTime? LastUpdatedByOn { get; set; }
+        public String LastUpdatedByOn { get; set; }
 
         public int AddedByUserId { get; set; }
         public string AddedByUserName { get; set; }  
         
         public int NumberOfEntreeIncluded { get; set; }
+        public IEnumerable<string> Entrees { get; set; }
     }
 }

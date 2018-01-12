@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GridVegetable } from '../../../../viewModels/meal/vegetable';
 import { VegetableService } from '../../../../services/meal/vegetable/vegetable.service';
 
@@ -23,7 +24,23 @@ export class VegetableListComponent implements OnInit {
     {}
   ];
 
-  constructor(private _vegetableService: VegetableService) { }
+  @ViewChild('myTable') table: any;
+  ngx_rows = [];
+  ngx_loadingIndicator: boolean = true;
+  ngx_reorderable: boolean = true;
+  ngx_timeout: any;
+
+  ngx_columns = [
+    { prop: 'keyValuePairInfo.id', name: 'Id' },
+    { prop: 'keyValuePairInfo.name', name: 'Name' },
+    { prop: 'addedOn', name: 'Added On' },
+    { prop: 'addedByUserName', name: 'Added By' },
+    { prop: 'numberOfEntreeIncluded', name: 'Entrees Included' },
+    { prop: 'lastUpdatedByOn', name: 'Updated On' }
+  ];
+
+
+  constructor(private _vegetableService: VegetableService, private router: Router) { }
 
   ngOnInit() {
     this.populateVegetables();
@@ -34,6 +51,8 @@ export class VegetableListComponent implements OnInit {
       .subscribe(result => {
         this.queryResult = result;
         this.allVegetables = result.items;
+        this.ngx_rows = result.totalItemList;
+        setTimeout(() => { this.ngx_loadingIndicator = false; }, 1500);
       });
   }
 
@@ -71,5 +90,28 @@ export class VegetableListComponent implements OnInit {
   onPageChange(_pageIndex) {
     this.query.page = _pageIndex;
     this.populateVegetables();
+  }
+
+  editVegetable(value) {
+    console.log('editVegetable value: ' + value);
+    this.router.navigate(['/meal/vegetableForm/' + value]);
+  }
+
+  onPage(event) {
+    clearTimeout(this.ngx_timeout);
+    this.ngx_timeout = setTimeout(() => {
+      console.log('paged!', event);
+    }, 100);
+  }
+
+  toggleExpandRow(row, expanded) {
+    console.log('Toggled Expand Row!', row);
+    console.log('Toggled Expand Row expanded!', expanded);
+    let vegeId = row.keyValuePairInfo.Id;
+    this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  onDetailToggle(){
+    console.log('Detail Toggled', event);
   }
 }

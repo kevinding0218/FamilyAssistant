@@ -468,7 +468,7 @@ Only ng serve + dotnet run works
 ---------------------------
 /* npm install --save @types/toastr */
 npm install ngx-toastr --save
-
+npm install @swimlane/ngx-datatable --save
 
 
 

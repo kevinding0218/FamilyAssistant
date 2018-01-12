@@ -36,11 +36,11 @@ namespace FamilyAssistant.Controllers.ApiController {
         #region READ LIST OF OBJECTS
         [HttpGet]
          public async Task<QueryResultResource<GridVegetableResource>> GetVegetables (VegetableQueryResource filterResource) {
-             var result = new QueryResultResource<GridVegetableResource>();
+             //var result = new QueryResultResource<GridVegetableResource>();
              var filter = _mapper.Map<VegetableQueryResource, VegetableQuery>(filterResource);
 
             var queryResult = await _vegeRepository.GetVegetables(filter);
-            result.TotalItems = queryResult.TotalItems;
+            //result.TotalItems = queryResult.TotalItems;
             var queryResultResource = _mapper.Map<QueryResult<Vegetable>, QueryResultResource<GridVegetableResource>>(queryResult);
 
             #region  Apply additional fields to Result and apply sorting/paging
@@ -53,6 +53,7 @@ namespace FamilyAssistant.Controllers.ApiController {
 
                  gridVegetable.AddedByUserName = await _userRepository.GetUserFullName(AddedByUserId);
                  gridVegetable.NumberOfEntreeIncluded = await _vegeRepository.GetNumberOfEntreesWithVege(VegeId);
+                 gridVegetable.Entrees = new List<string>(new string[] { "Entree 1", "Entree 2", "Entree 3" });
             }
 
             var columnsMap = new Dictionary<string, Expression<Func<GridVegetableResource, object>>>()
@@ -62,12 +63,14 @@ namespace FamilyAssistant.Controllers.ApiController {
             };
 
             queryResultItemsQueryable = queryResultItemsQueryable.ApplyOrdering(filter, columnsMap);
+            queryResultResource.TotalItemList = queryResultItemsQueryable.ToList();
             queryResultItemsQueryable = queryResultItemsQueryable.ApplyPaging(filter);
             //ToListAsync and CountAsync only works for EF query which is like _context.Objects, etc
-            result.Items = queryResultItemsQueryable.ToList();
+            //result.Items = queryResultItemsQueryable.ToList();
+            queryResultResource.Items = queryResultItemsQueryable.ToList();
             #endregion
 
-            return result;
+            return queryResultResource;
          }
          #endregion
 

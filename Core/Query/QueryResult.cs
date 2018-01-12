@@ -6,5 +6,6 @@ namespace FamilyAssistant.Core.Query
     {
         public int TotalItems { get; set; }
         public IEnumerable<T> Items { get; set; }
+        public IEnumerable<T> TotalItemList { get; set;}
     }
 }
