@@ -1,3 +1,4 @@
+import { ToastrModule } from 'ngx-toastr';
 import { HttpModule } from '@angular/http';
 import { ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -77,7 +78,13 @@ const APP_DIRECTIVES = [
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      closeButton: true,
+      progressAnimation: 'increasing'
+    })
   ],
   providers: [
     {

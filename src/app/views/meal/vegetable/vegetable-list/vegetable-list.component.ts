@@ -8,6 +8,7 @@ import { VegetableService } from '../../../../services/meal/vegetable/vegetable.
   templateUrl: './vegetable-list.component.html'
 })
 export class VegetableListComponent implements OnInit {
+  isDevelopment: boolean = false;
   private readonly PAGE_SIZE = 2;
   queryResult: any = {};
   allVegetables: GridVegetable[];
@@ -31,6 +32,7 @@ export class VegetableListComponent implements OnInit {
   ngx_loadingIndicator: boolean = true;
   ngx_reorderable: boolean = true;
   ngx_timeout: any;
+  temp = [];
 
   ngx_columns = [
     { prop: 'keyValuePairInfo.id', name: 'Id' },
@@ -53,7 +55,7 @@ export class VegetableListComponent implements OnInit {
       .subscribe(result => {
         this.queryResult = result;
         this.allVegetables = result.items;
-        this.ngx_rows = result.totalItemList;
+        this.ngx_rows = this.temp = result.totalItemList;
         setTimeout(() => { this.ngx_loadingIndicator = false; }, 1500);
       });
   }
@@ -97,6 +99,20 @@ export class VegetableListComponent implements OnInit {
   editVegetable(value) {
     console.log('editVegetable value: ' + value);
     this.router.navigate(['/meal/vegetableForm/' + value]);
+  }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    const temp = this.temp.filter(function(d) {
+      return d.keyValuePairInfo.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.ngx_rows = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.mainTable.offset = 0;
   }
 
   onPageMainTable(event) {
