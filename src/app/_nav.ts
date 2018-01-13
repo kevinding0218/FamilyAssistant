@@ -11,17 +11,17 @@ export const navigation = [
   {
     name: 'Meal',
     url: '/meal',
-    icon: 'icon-puzzle',
+    icon: 'icon-fire',
     children: [
       {
         name: 'Vegetables',
         url: '/meal/vegetableList',
-        icon: 'icon-puzzle'
+        icon: 'icon-list'
       },
       {
-        name: 'New Vegetable',
-        url: '/meal/vegetableForm/new',
-        icon: 'icon-puzzle'
+        name: 'Meats',
+        url: '/meal/meatList',
+        icon: 'icon-list'
       }
     ]
   },

@@ -25,9 +25,17 @@ namespace FamilyAssistant.Controllers.ApiController {
         public readonly IVegetableRepository _vegeRepository;
         private readonly IUnitOfWork _uow;
         private readonly IUserRepository _userRepository;
+        private readonly IEntreeRepository _entreeRepository;
 
-        public VegetableController (IMapper mapper, IVegetableRepository vegeRepository, IUserRepository userRepository, IUnitOfWork uow) {
+        public VegetableController (
+            IMapper mapper, 
+            IVegetableRepository vegeRepository, 
+            IUserRepository userRepository,
+            IEntreeRepository entreeRepository,
+            IUnitOfWork uow)
+        {
             this._userRepository = userRepository;
+            this._entreeRepository = entreeRepository;
             this._uow = uow;
             this._vegeRepository = vegeRepository;
             this._mapper = mapper;
@@ -53,7 +61,15 @@ namespace FamilyAssistant.Controllers.ApiController {
 
                  gridVegetable.AddedByUserName = await _userRepository.GetUserFullName(AddedByUserId);
                  gridVegetable.NumberOfEntreeIncluded = await _vegeRepository.GetNumberOfEntreesWithVege(VegeId);
-                 gridVegetable.Entrees = new List<string>(new string[] { "Entree 1", "Entree 2", "Entree 3" });
+                 gridVegetable.EntreesIncluded = await this._entreeRepository.GetEntreeInfoWithVegeId(VegeId);
+
+                 if (gridVegetable.EntreesIncluded != null && gridVegetable.EntreesIncluded.Count() > 0) {
+                     foreach(var entreeInfo in gridVegetable.EntreesIncluded)
+                    {
+                        entreeInfo.EntreeDetailList = await this._entreeRepository.GetEntreeDetailWithEntreeId(entreeInfo.EntreeId);
+                    }
+                 }
+                 //gridVegetable.SetEntrees(new List<string>(new string[] { "Entree 1", "Entree 2", "Entree 3" }));
             }
 
             var columnsMap = new Dictionary<string, Expression<Func<GridVegetableResource, object>>>()

@@ -30,6 +30,9 @@ namespace FamilyAssistant {
         public void ConfigureServices (IServiceCollection services) {
             services.AddScoped<IVegetableRepository, VegetableRepository> ();
             services.AddScoped<IUserRepository, UserRepository> ();
+            services.AddScoped<IEntreeRepository, EntreeRepository> ();
+
+
             services.AddScoped<IUnitOfWork, UnitOfWork> ();
 
             services.AddAutoMapper ();

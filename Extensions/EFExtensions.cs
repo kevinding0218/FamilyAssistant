@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using FamilyAssistant.CustomAttribute;
 using Microsoft.EntityFrameworkCore;
 
 namespace FamilyAssistant.Extensions {
@@ -125,8 +126,12 @@ namespace FamilyAssistant.Extensions {
                     while (dr.Read ()) {
                         T obj = Activator.CreateInstance<T> ();
                         foreach (var prop in props) {
-                            var val = dr.GetValue (colMapping[prop.Name.ToLower ()].ColumnOrdinal.Value);
-                            prop.SetValue (obj, val == DBNull.Value ? null : val);
+                            var hasIgnoreAttribute = Attribute.IsDefined(prop, typeof(IngoreReadToListAttribute));
+                            if (!hasIgnoreAttribute)
+                            {
+                                var val = dr.GetValue (colMapping[prop.Name.ToLower ()].ColumnOrdinal.Value);
+                                prop.SetValue (obj, val == DBNull.Value ? null : val);
+                            }
                         }
                         objList.Add (obj);
                     }

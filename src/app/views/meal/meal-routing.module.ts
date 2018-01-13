@@ -1,3 +1,4 @@
+import { MeatListComponent } from './meat/meat-list/meat-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { VegetableListComponent } from './vegetable/vegetable-list/vegetable-list.component';
@@ -10,6 +11,13 @@ const routes: Routes = [
       title: 'Meal'
     },
     children: [
+      {
+        path: '',
+        component: VegetableListComponent,
+        data: {
+          title: 'Vegetables'
+        }
+      },
       {
         path: 'vegetableList',
         component: VegetableListComponent,
@@ -29,6 +37,13 @@ const routes: Routes = [
         component: VegetableFormComponent,
         data: {
           title: 'New Vegetable'
+        }
+      },
+      {
+        path: 'meatList',
+        component: MeatListComponent,
+        data: {
+          title: 'Meats'
         }
       }
     ]

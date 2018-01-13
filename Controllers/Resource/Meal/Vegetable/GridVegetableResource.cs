@@ -18,6 +18,6 @@ namespace FamilyAssistant.Controllers.Resource.Meal
         public string AddedByUserName { get; set; }  
         
         public int NumberOfEntreeIncluded { get; set; }
-        public IEnumerable<string> Entrees { get; set; }
+        public IEnumerable<EntreeInfoResource> EntreesIncluded { get; set; }
     }
 }

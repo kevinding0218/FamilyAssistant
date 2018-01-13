@@ -8,8 +8,6 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppErrorHandler } from './eventHandler/app.error-handler';
 //Routing
 import { AppRoutingModule } from './app-routing.module';
-//Utility
-import { AppNgxBootstrapModule } from "./ngxModule/app-ngx-bootstrap.module";
 //App Component
 import { AppComponent } from './app.component';
 
@@ -79,8 +77,7 @@ const APP_DIRECTIVES = [
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule,
-    AppNgxBootstrapModule
+    AppRoutingModule
   ],
   providers: [
     {

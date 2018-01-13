@@ -68,24 +68,63 @@
             <i class="fa fa-align-justify"></i> List of Vegetables
           </div>
           <div class="card-body">
-            <ngx-datatable #myTable class="bootstrap expandable" [rows]="ngx_rows" [loadingIndicator]="ngx_loadingIndicator" [columnMode]="'force'"
-              [headerHeight]="40" [footerHeight]="40" [limit]="3" [rowHeight]="'auto'" [reorderable]="ngx_reorderable" (page)="onPage($event)">
+            <ngx-datatable #vegetableTable class="bootstrap expandable" [rows]="ngx_rows" [loadingIndicator]="ngx_loadingIndicator" [columnMode]="'force'"
+              [headerHeight]="40" [footerHeight]="40" [limit]="3" [rowHeight]="'auto'" [reorderable]="ngx_reorderable" (page)="onPageMainTable($event)">
               <!-- Row Detail Template -->
-              <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+              <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow (toggle)="onDetailToggle($event)">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
                   <div style="padding-left:35px;">
-                    <ul>
-                      <li *ngFor="let entree of row.entrees; let i = index">
-                        {{i + 1}} - {{entree}}
-                      </li>
-                    </ul>
+                    <ngx-datatable #entreeTable class="expandable" [columnMode]="'force'" [rows]="row.entreesIncluded" [headerHeight]="40"
+                      [footerHeight]="40" [limit]="5" [rowHeight]="'auto'" (page)="onPageDetailTable($event)">
+                      <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow (toggle)="onDetailDetailToggle($event)">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                          <div style="padding-left:35px;">
+                            <ngx-datatable #entreeDetailTable class="expandable" [columnMode]="'force'" [rows]="row.entreeDetailList" [headerHeight]="40"
+                              [footerHeight]="40" [limit]="5" [rowHeight]="'auto'" (page)="onPageDetailDetailTable($event)">
+                              <ngx-datatable-column name="Vegetable" sortable="false" prop="vegetable">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                  <label>{{value}}</label>
+                                </ng-template>
+                              </ngx-datatable-column>
+                              <ngx-datatable-column name="Meat" sortable="false" prop="meat">
+                                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                  <label>{{value}}</label>
+                                </ng-template>
+                              </ngx-datatable-column>
+                            </ngx-datatable>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-row-detail>
+                      <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false" [canAutoResize]="false">
+                        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                          <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded"
+                            title="Expand/Collapse Row" (click)="toggleExpandDetailRow(row,expanded)">
+                          </a>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Entree" sortable="false" prop="entreeName">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                          <label>{{value}}</label>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Vegetable Count" sortable="false" prop="vegetableCount">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                          <label>{{value}}</label>
+                        </ng-template>
+                      </ngx-datatable-column>
+                      <ngx-datatable-column name="Meat Count" sortable="false" prop="meatCount">
+                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                          <label>{{value}}</label>
+                        </ng-template>
+                      </ngx-datatable-column>
+                    </ngx-datatable>
                   </div>
                 </ng-template>
               </ngx-datatable-row-detail>
               <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false" [canAutoResize]="false">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-                  <a  *ngIf="row.numberOfEntreeIncluded > 0" href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
-                    (click)="toggleExpandRow(row,expanded)">
+                  <a *ngIf="row.numberOfEntreeIncluded > 0" href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded"
+                    title="Expand/Collapse Row" (click)="toggleExpandRow(row,expanded)">
                   </a>
                 </ng-template>
               </ngx-datatable-column>

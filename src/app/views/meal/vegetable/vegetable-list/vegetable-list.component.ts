@@ -24,7 +24,9 @@ export class VegetableListComponent implements OnInit {
     {}
   ];
 
-  @ViewChild('myTable') table: any;
+  @ViewChild('vegetableTable') mainTable: any;
+  @ViewChild('entreeTable') detailtable: any;
+  @ViewChild('entreeDetailTable') detaildetailtable: any;
   ngx_rows = [];
   ngx_loadingIndicator: boolean = true;
   ngx_reorderable: boolean = true;
@@ -97,21 +99,46 @@ export class VegetableListComponent implements OnInit {
     this.router.navigate(['/meal/vegetableForm/' + value]);
   }
 
-  onPage(event) {
+  onPageMainTable(event) {
     clearTimeout(this.ngx_timeout);
     this.ngx_timeout = setTimeout(() => {
-      console.log('paged!', event);
+      console.log('onPageMainTable!', event);
+    }, 100);
+  }
+
+  onPageDetailTable(event) {
+    clearTimeout(this.ngx_timeout);
+    this.ngx_timeout = setTimeout(() => {
+      console.log('onPageDetailTable!', event);
+    }, 100);
+  }
+  
+  onPageDetailDetailTable(event) {
+    clearTimeout(this.ngx_timeout);
+    this.ngx_timeout = setTimeout(() => {
+      console.log('onPageDetailDetailTable!', event);
     }, 100);
   }
 
   toggleExpandRow(row, expanded) {
-    console.log('Toggled Expand Row!', row);
-    console.log('Toggled Expand Row expanded!', expanded);
+    console.log('toggleExpandRow Row: ', row);
+    console.log('toggleExpandRow expanded: ', expanded);
     let vegeId = row.keyValuePairInfo.Id;
-    this.table.rowDetail.toggleExpandRow(row);
+    this.mainTable.rowDetail.toggleExpandRow(row);
+  }
+
+  toggleExpandDetailRow(row, expanded) {
+    console.log('toggleExpandDetailRow Row: ', row);
+    console.log('toggleExpandDetailRow Row expanded: ', expanded);
+    let entreeId = row.entreeId;
+    this.detailtable.rowDetail.toggleExpandRow(row);
   }
 
   onDetailToggle(){
     console.log('Detail Toggled', event);
+  }
+
+  onDetailDetailToggle(){
+    console.log('Detail Detail Toggled', event);
   }
 }
