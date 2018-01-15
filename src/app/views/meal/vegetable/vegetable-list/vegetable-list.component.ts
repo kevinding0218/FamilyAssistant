@@ -1,14 +1,14 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GridVegetable } from '../../../../viewModels/meal/vegetable';
-import { VegetableService } from '../../../../services/meal/vegetable/vegetable.service';
+import { VegetableService } from '../../../../services/meal/vegetable.service';
 
 @Component({
   selector: 'vegetable-list',
   templateUrl: './vegetable-list.component.html'
 })
 export class VegetableListComponent implements OnInit {
-  isDevelopment: boolean = false;
+  isDevelopment: boolean = (JSON.parse(localStorage.getItem('currentUser')) == 'true' ? true : false);
   private readonly PAGE_SIZE = 2;
   queryResult: any = {};
   allVegetables: GridVegetable[];
@@ -22,12 +22,14 @@ export class VegetableListComponent implements OnInit {
     { title: 'Added By', key: 'addedBy', isSortable: true },
     { title: 'Entrees Included', key: 'entreesIncluded', isSortable: true },
     { title: 'Updated On', key: 'updatedOn', isSortable: true },
+    { title: 'Staple Food', key: 'stapleFood', isSortable: true },
+    { title: 'Note', key: 'note', isSortable: false },
     {}
   ];
 
-  @ViewChild('vegetableTable') mainTable: any;
-  @ViewChild('entreeTable') detailtable: any;
-  @ViewChild('entreeDetailTable') detaildetailtable: any;
+  @ViewChild('mainTable') mainTable: any;
+  @ViewChild('levelOneDetailTable') detailtable: any;
+  @ViewChild('levelTwoDetailTable') detaildetailtable: any;
   ngx_rows = [];
   ngx_loadingIndicator: boolean = true;
   ngx_reorderable: boolean = true;
@@ -40,17 +42,19 @@ export class VegetableListComponent implements OnInit {
     { prop: 'addedOn', name: 'Added On' },
     { prop: 'addedByUserName', name: 'Added By' },
     { prop: 'numberOfEntreeIncluded', name: 'Entrees Included' },
-    { prop: 'lastUpdatedByOn', name: 'Updated On' }
+    { prop: 'lastUpdatedByOn', name: 'Updated On' },
+    { prop: 'stapleFood', name: 'Staple Food' },
+    { prop: 'note', name: 'Note' }
   ];
 
 
   constructor(private _vegetableService: VegetableService, private router: Router) { }
 
   ngOnInit() {
-    this.populateVegetables();
+    this.populateDataTable();
   }
 
-  private populateVegetables() {
+  private populateDataTable() {
     this._vegetableService.getVegetables(this.query)
       .subscribe(result => {
         this.queryResult = result;
@@ -69,7 +73,7 @@ export class VegetableListComponent implements OnInit {
 
     this.vegetables = queryResult; */
     this.query.page = 1;
-    this.populateVegetables();
+    this.populateDataTable();
   }
 
   resetquery() {
@@ -88,16 +92,16 @@ export class VegetableListComponent implements OnInit {
       this.query.isSortAscending = true;
     }
 
-    this.populateVegetables();
+    this.populateDataTable();
   }
 
   onPageChange(_pageIndex) {
     this.query.page = _pageIndex;
-    this.populateVegetables();
+    this.populateDataTable();
   }
 
-  editVegetable(value) {
-    console.log('editVegetable value: ' + value);
+  editMainTableItem(value) {
+    console.log('editMainTableItem value: ' + value);
     this.router.navigate(['/meal/vegetableForm/' + value]);
   }
 

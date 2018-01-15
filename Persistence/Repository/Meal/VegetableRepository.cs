@@ -25,11 +25,13 @@ namespace FamilyAssistant.Persistence.Repository.Meal {
             var result = new QueryResult<Vegetable>();
             var query =  _context.Vegetables.AsQueryable();
 
-/*             if (queryObj.VegetableId.HasValue)
+            /*
+             if (queryObj.VegetableId.HasValue)
                 query = query.Where(vege => vege.Id == queryObj.VegetableId);
 
             if (queryObj.SortBy == "name")
-                query = (queryObj.IsSortAscending) ? query.OrderBy(vege => vege.Name) : query.OrderByDescending(vege => vege.Name); */
+                query = (queryObj.IsSortAscending) ? query.OrderBy(vege => vege.Name) : query.OrderByDescending(vege => vege.Name); 
+            */
 
             var columnsMap = new Dictionary<string, Expression<Func<Vegetable, object>>>()
             {
@@ -62,41 +64,38 @@ namespace FamilyAssistant.Persistence.Repository.Meal {
             _context.Remove (existedVegetable);
         }
 
-        public async Task<int> GetNumberOfEntreesWithVege (int vegeId) {
+        public async Task<int> GetNumberOfEntreesWithVege (int vegeId) {    
+            // Use Store Procedure         
             int numberOfEntreeWithVege = -1;
 
-            await _context.LoadStoredProc ("dbo.GetNumberOfEntreeByVegeId")
-                .WithSqlParam ("VegeId", vegeId)
+            await _context.LoadStoredProc ("dbo.GetNumberOfEntreeById")
+                .WithSqlParam ("Id", vegeId)
+                .WithSqlParam ("Type", "Vegetable")
                 .ExecuteStoredProcAsync ((handler) => {
                     numberOfEntreeWithVege = handler.ReadToValue<int> () ?? default (int);;
                     // do something with your results.
-                });
+                }); 
 
-            /*  await _context.LoadSQLText ("SELECT COUNT(*) AS TotalEntrees FROM EntreeVegetable WHERE VegeId = " + vegeId.ToString ())
+            /*  
+            // Use Raw SQL
+            await _context.LoadSQLText ("SELECT COUNT(*) AS TotalEntrees FROM EntreeVegetable WHERE VegeId = " + vegeId.ToString ())
                  .ExecuteSQLTextAsync ((handler) => {
                      numberOfEntreeWithVege = handler.ReadToValue<int>() ?? default(int);;
                      // do something with your results.
-                 }); */
+                 }); 
+            */
 
-            /*  
-             var conn = _context.Database.GetDbConnection();
-             await conn.OpenAsync();
-             using (var command = conn.CreateCommand())
-             {
-                 string query = "SELECT COUNT(*) AS TotalEntrees FROM EntreeVegetable WHERE VegeId = " + vegeId.ToString();
-                 command.CommandText = query;
-                 System.Data.Common.DbDataReader reader = await command.ExecuteReaderAsync();
+            /*
+            // Use Entity Framework Query Data
+            // Note: include not working in Count()
+             var vegetable = this._context.Vegetables.Single(v => v.Id == vegeId);
 
-                 if (reader.HasRows)
-                 {
-                     while (await reader.ReadAsync())
-                     {
-                         numberOfEntreeWithVege = reader.GetInt32(0);
-                     }
-                 }
-                 reader.Dispose();
-             } 
-             conn.Close(); */
+             numberOfEntreeWithVege = await this._context.Entry(vegetable)
+                .Collection(v => v.EntreesWithCurrentVegetable)
+                .Query()
+                .CountAsync(); 
+            */
+
             return numberOfEntreeWithVege;
         }
     }

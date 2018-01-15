@@ -28,8 +28,9 @@ namespace FamilyAssistant {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices (IServiceCollection services) {
-            services.AddScoped<IVegetableRepository, VegetableRepository> ();
             services.AddScoped<IUserRepository, UserRepository> ();
+            services.AddScoped<IVegetableRepository, VegetableRepository> ();
+            services.AddScoped<IMeatRepository, MeatRepository> ();
             services.AddScoped<IEntreeRepository, EntreeRepository> ();
 
 

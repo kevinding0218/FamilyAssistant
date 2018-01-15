@@ -43,13 +43,13 @@ namespace FamilyAssistant.Controllers.ApiController {
 
         #region READ LIST OF OBJECTS
         [HttpGet]
-         public async Task<QueryResultResource<GridVegetableResource>> GetVegetables (VegetableQueryResource filterResource) {
-             //var result = new QueryResultResource<GridVegetableResource>();
+         public async Task<QueryResultResource<GridEntreeComponentResource>> GetVegetables (VegetableQueryResource filterResource) {
+             //var result = new QueryResultResource<GridEntreeComponentResource>();
              var filter = _mapper.Map<VegetableQueryResource, VegetableQuery>(filterResource);
 
             var queryResult = await _vegeRepository.GetVegetables(filter);
             //result.TotalItems = queryResult.TotalItems;
-            var queryResultResource = _mapper.Map<QueryResult<Vegetable>, QueryResultResource<GridVegetableResource>>(queryResult);
+            var queryResultResource = _mapper.Map<QueryResult<Vegetable>, QueryResultResource<GridEntreeComponentResource>>(queryResult);
 
             #region  Apply additional fields to Result and apply sorting/paging
             var queryResultItemsQueryable = queryResultResource.Items.AsQueryable();
@@ -64,7 +64,7 @@ namespace FamilyAssistant.Controllers.ApiController {
                  gridVegetable.EntreesIncluded = await this._entreeRepository.GetEntreeInfoWithVegeId(VegeId);
 
                  if (gridVegetable.EntreesIncluded != null && gridVegetable.EntreesIncluded.Count() > 0) {
-                     foreach(var entreeInfo in gridVegetable.EntreesIncluded)
+                    foreach(var entreeInfo in gridVegetable.EntreesIncluded)
                     {
                         entreeInfo.EntreeDetailList = await this._entreeRepository.GetEntreeDetailWithEntreeId(entreeInfo.EntreeId);
                     }
@@ -72,7 +72,7 @@ namespace FamilyAssistant.Controllers.ApiController {
                  //gridVegetable.SetEntrees(new List<string>(new string[] { "Entree 1", "Entree 2", "Entree 3" }));
             }
 
-            var columnsMap = new Dictionary<string, Expression<Func<GridVegetableResource, object>>>()
+            var columnsMap = new Dictionary<string, Expression<Func<GridEntreeComponentResource, object>>>()
             {
                 ["addedBy"] = gv => gv.AddedByUserName,
                 ["entreesIncluded"] = gv => gv.NumberOfEntreeIncluded
@@ -98,7 +98,7 @@ namespace FamilyAssistant.Controllers.ApiController {
                 return NotFound ();
 
             // Convert from Domain Model to View Model
-            var result = _mapper.Map<Vegetable, SaveVegetableResource> (isExistedVegetable);
+            var result = _mapper.Map<Vegetable, SaveEntreeComponentResource> (isExistedVegetable);
 
             // Return view Model
             return Ok (result);
@@ -107,7 +107,7 @@ namespace FamilyAssistant.Controllers.ApiController {
 
         #region CREATE
         [HttpPost]
-        public async Task<IActionResult> CreateVegetable ([FromBody] SaveVegetableResource newVegetableResource) {
+        public async Task<IActionResult> CreateVegetable ([FromBody] SaveEntreeComponentResource newVegetableResource) {
             if (!ModelState.IsValid)
                 return BadRequest (ModelState);
 
@@ -122,7 +122,7 @@ namespace FamilyAssistant.Controllers.ApiController {
             }
 
             // Convert from View Model to Domain Model
-            var newVegetable = _mapper.Map<SaveVegetableResource, Vegetable> (newVegetableResource);
+            var newVegetable = _mapper.Map<SaveEntreeComponentResource, Vegetable> (newVegetableResource);
             newVegetable.AddedOn = DateTime.Now;
 
             // Insert into database by using Domain Model
@@ -131,7 +131,7 @@ namespace FamilyAssistant.Controllers.ApiController {
 
             newVegetable = await _vegeRepository.GetVegetable (newVegetable.Id);
             // Convert from Domain Model to View Model
-            var result = _mapper.Map<Vegetable, SaveVegetableResource> (newVegetable);
+            var result = _mapper.Map<Vegetable, SaveEntreeComponentResource> (newVegetable);
 
             // Return view Model
             return Ok (result);
@@ -140,7 +140,7 @@ namespace FamilyAssistant.Controllers.ApiController {
 
         #region  UPDATE
         [HttpPut ("{id}")] //api/vegetable/id
-        public async Task<IActionResult> UpdateVegetable (int id, [FromBody] SaveVegetableResource SaveVegetableResource) {
+        public async Task<IActionResult> UpdateVegetable (int id, [FromBody] SaveEntreeComponentResource SaveEntreeComponentResource) {
             if (!ModelState.IsValid)
                 return BadRequest (ModelState);
 
@@ -148,13 +148,8 @@ namespace FamilyAssistant.Controllers.ApiController {
             if (isExistedVegetable == null)
                 return NotFound ();
 
-            if (await _vegeRepository.IsDuplicateVegetable (SaveVegetableResource.keyValuePairInfo.Name)) {
-                ModelState.AddModelError ("DuplicateVegetable", SaveVegetableResource.keyValuePairInfo.Name + " already existed!");
-                return BadRequest (ModelState);
-            }
-
             // Convert from View Model to Domain Model
-            _mapper.Map<SaveVegetableResource, Vegetable> (SaveVegetableResource, isExistedVegetable);
+            _mapper.Map<SaveEntreeComponentResource, Vegetable> (SaveEntreeComponentResource, isExistedVegetable);
             isExistedVegetable.LastUpdatedByOn = DateTime.Now;
 
             // Insert into database by using Domain Model
@@ -163,7 +158,7 @@ namespace FamilyAssistant.Controllers.ApiController {
             // Fetch complete object from database
             isExistedVegetable = await _vegeRepository.GetVegetable(isExistedVegetable.Id);
             // Convert from Domain Model to View Model
-            var result = _mapper.Map<Vegetable, SaveVegetableResource> (isExistedVegetable);
+            var result = _mapper.Map<Vegetable, SaveEntreeComponentResource> (isExistedVegetable);
 
             // Return view Model
             return Ok (result);

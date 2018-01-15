@@ -3,7 +3,7 @@ export interface KeyValuePairInfo {
     name: string;
 }
 
-export interface SaveVegetable {
+export interface SaveMeat {
     keyValuePairInfo: KeyValuePairInfo;
     addedOn: Date;
     addedByUserId: number;
@@ -12,7 +12,7 @@ export interface SaveVegetable {
     note: string;
 }
 
-export interface GridVegetable {
+export interface GridMeat {
     keyValuePairInfo: KeyValuePairInfo;
     addedOn: Date;
     addedByUserName: string;

@@ -8,26 +8,27 @@ using FamilyAssistant.Core.Models.Shared;
 
 namespace FamilyAssistant.Core.Models.Meal
 {
-    [Table("Meat")]
-    public class Meat : TransLog
+    [Table("StapleFood")]
+    public class StapleFood : TransLog
     {
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(255)]
         public string Name { get; set; }
         //public int MealTypeId { get; set; }
+        
         [StringLength(255)]
         public string Note { get; set; }
-        // one Meat could have only one MealType 3
+
+        // one StapleFood could have only one MealType 4
         //public MealType MealType { get; set; }
-        // one Meat could have many EntreeMeat
-        public ICollection<EntreeMeat> EntreesWithCurrentMeat { get; set; }
+        // one StapleFood could have only many Entree
+        public ICollection<Entree> EntreesWithCurrentStapleFood { get; set; }
 
-        public Meat()
+        public StapleFood()
         {
-            //MealTypeId = 3;
+            //MealTypeId = 4;
         }
-
     }
 }

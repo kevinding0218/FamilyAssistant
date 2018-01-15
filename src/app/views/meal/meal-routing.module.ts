@@ -1,3 +1,4 @@
+import { MeatFormComponent } from './meat/meat-form/meat-form.component';
 import { MeatListComponent } from './meat/meat-list/meat-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -22,28 +23,42 @@ const routes: Routes = [
         path: 'vegetableList',
         component: VegetableListComponent,
         data: {
-          title: 'Vegetables'
+          title: 'Vegetable List'
         }
       },
       {
         path: 'vegetableForm/new',
         component: VegetableFormComponent,
         data: {
-          title: 'New Vegetable'
+          title: 'Create New Vegetable'
         }
       },
       {
         path: 'vegetableForm/:id',
         component: VegetableFormComponent,
         data: {
-          title: 'New Vegetable'
+          title: 'Update Vegetable'
         }
       },
       {
         path: 'meatList',
         component: MeatListComponent,
         data: {
-          title: 'Meats'
+          title: 'Meat List'
+        }
+      },
+      {
+        path: 'meatForm/new',
+        component: MeatFormComponent,
+        data: {
+          title: 'Create New Meat'
+        }
+      },
+      {
+        path: 'meatForm/:id',
+        component: MeatFormComponent,
+        data: {
+          title: 'Update Vegetable'
         }
       }
     ]

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FamilyAssistant.Core.Models.Shared;
 
 namespace FamilyAssistant.Core.Models.Meal
 {
     [Table ("Users")]
-    public class User {
-
+    public class User : TransLog
+    {
         public int UserID { get; set; }
 
         [Required]
@@ -29,6 +30,8 @@ namespace FamilyAssistant.Core.Models.Meal
 
         [Column(Order = 5)]
         public DateTime LastLogIn { get; set; }
+        [StringLength(255)]
+        public string Note { get; set; }
 
         public User()
         {

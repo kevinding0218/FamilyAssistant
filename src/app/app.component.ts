@@ -5,4 +5,8 @@ import { Component } from '@angular/core';
   selector: 'body',
   templateUrl: './app.component.html'
 })
-export class AppComponent { }
+export class AppComponent { 
+  constructor() {
+    localStorage.setItem('isDevelopment', 'false');
+  }
+}

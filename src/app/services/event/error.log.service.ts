@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ErrorLogService {
-  private name: String = 'ErrorLogService';
   constructor() {
   }
-  
+
   logError(error: any) {
     const date = new Date().toISOString();
     if (error instanceof HttpErrorResponse) {
@@ -16,7 +15,15 @@ export class ErrorLogService {
     } else if (error instanceof Error) {
       console.error(date, 'There was a general error.', error.message);
     } else {
-      console.error(date, 'Nobody threw an Error but something happened!', error);
+      if (error.status == 400) {
+        let validationErrorDictionary = JSON.parse(error._body);
+        for (var fieldName in validationErrorDictionary) {
+          if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+            error.message = validationErrorDictionary[fieldName];
+          }
+        }
+      }
+      console.error(date, 'Nobody threw an Error but something happened!', error.message);
     }
   }
 }

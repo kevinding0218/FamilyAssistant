@@ -9,6 +9,8 @@ namespace FamilyAssistant.Controllers.Resource.Meal
         public string EntreeName { get; set; }
         public int VegetableCount { get; set; }
         public int MeatCount { get; set; }
+        public string StapleFood { get; set; }
+        public string Note { get; set; }
         [IngoreReadToListAttribute]
         public IEnumerable<EntreeDetailResource> EntreeDetailList { get; set; }
 

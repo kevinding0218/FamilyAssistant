@@ -23,8 +23,8 @@ BEGIN
 	IF @Type = 'Vegetable'
 	BEGIN
 		SELECT e.Id AS EntreeId, e.Name AS EntreeName, 
-		ISNULL(ev1.VegetableCount, 0) AS VegetableCount, ISNULL(em.MeatCount, 0) AS MeatCount,
-		'' AS EntreeDetailList
+		ISNULL(ev1.VegetableCount, 0) AS VegetableCount, ISNULL(em.MeatCount, 0) AS MeatCount
+		, ISNULL(sf.Name, '') AS StapleFood, ISNULL(e.Note, '') AS Note
 		FROM FamilyAssistant.dbo.Entree e
 		LEFT JOIN FamilyAssistant.dbo.EntreeVegetable ev ON e.Id = ev.EntreeId
 		LEFT JOIN (
@@ -37,11 +37,14 @@ BEGIN
 			FROM dbo.EntreeMeat  
 			GROUP BY EntreeId
 		) em ON em.EntreeId = e.Id
+		LEFT JOIN FamilyAssistant.dbo.StapleFood sf ON sf.Id = e.StapleFoodId
 		WHERE ev.VegeId = @Id
 	END
 	ELSE IF @Type = 'Meat'
 	BEGIN
-		SELECT e.Id AS EntreeId, e.Name AS EntreeName, ISNULL(ev.VegetableCount, 0) AS VegetableCount, ISNULL(em2.MeatCount, 0) AS MeatCount
+		SELECT e.Id AS EntreeId, e.Name AS EntreeName, 
+		ISNULL(ev.VegetableCount, 0) AS VegetableCount, ISNULL(em2.MeatCount, 0) AS MeatCount
+		, ISNULL(sf.Name, '') AS StapleFood, ISNULL(e.Note, '') AS Note
 		FROM FamilyAssistant.dbo.Entree e
 		LEFT JOIN FamilyAssistant.dbo.EntreeMeat em ON e.Id = em.EntreeId
 		LEFT JOIN (
@@ -54,11 +57,14 @@ BEGIN
 			FROM dbo.EntreeMeat  
 			GROUP BY EntreeId
 		) em2 ON em2.EntreeId = e.Id
+		LEFT JOIN FamilyAssistant.dbo.StapleFood sf ON sf.Id = e.StapleFoodId
 		WHERE em.MeatId = @Id
 	END
 	ELSE IF @Type = 'Entree'
 	BEGIN
-		SELECT e.Id AS EntreeId, e.Name AS EntreeName, ISNULL(ev1.VegetableCount, 0) AS VegetableCount, ISNULL(em.MeatCount, 0) AS MeatCount
+		SELECT e.Id AS EntreeId, e.Name AS EntreeName, 
+		ISNULL(ev1.VegetableCount, 0) AS VegetableCount, ISNULL(em.MeatCount, 0) AS MeatCount
+		, ISNULL(sf.Name, '') AS StapleFood, ISNULL(e.Note, '') AS Note
 		FROM FamilyAssistant.dbo.Entree e
 		LEFT JOIN FamilyAssistant.dbo.EntreeVegetable ev ON e.Id = ev.EntreeId
 		LEFT JOIN (
@@ -71,10 +77,13 @@ BEGIN
 			FROM dbo.EntreeMeat  
 			GROUP BY EntreeId
 		) em ON em.EntreeId = e.Id
+		LEFT JOIN FamilyAssistant.dbo.StapleFood sf ON sf.Id = e.StapleFoodId
 	END
 	ELSE IF @Type = 'EntreeDetail'
 	BEGIN
-	    SELECT e.Id AS EntreeId, e.Name AS EntreeName, ISNULL(v.Name, '') AS Vegetable, ISNULL(m.Name, '') AS Meat
+	    SELECT e.Id AS EntreeId, e.Name AS EntreeName, 
+		ISNULL(v.Name, '') AS Vegetable, ISNULL(m.Name, '') AS Meat
+		,ISNULL(e.Note, '') AS Note
 		FROM FamilyAssistant.dbo.Entree e
 		LEFT JOIN FamilyAssistant.dbo.EntreeVegetable ev ON e.Id = ev.EntreeId
 		LEFT JOIN FamilyAssistant.dbo.Vegetable v ON v.Id = ev.VegeId

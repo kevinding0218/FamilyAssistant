@@ -6,5 +6,6 @@ namespace FamilyAssistant.Controllers.Resource.Meal
         public string EntreeName { get; set; }
         public string Vegetable { get; set; }
         public string Meat { get; set; }
+        public string Note { get; set; }
     }
 }
