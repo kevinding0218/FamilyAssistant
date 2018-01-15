@@ -18,6 +18,7 @@ namespace FamilyAssistant.Persistence {
                 public DbSet<Meat> Meats { get; set; }
                 public DbSet<User> Users { get; set; }
                 public DbSet<Supermarket> SuperMarkets { get; set; }
+                public DbSet<Ingredient> Ingredients { get; set; }
 
                 protected override void OnModelCreating (ModelBuilder modelBuilder) {
                         //One to One
@@ -79,6 +80,8 @@ namespace FamilyAssistant.Persistence {
                                 new { sm.SupermarketId, sm.MeatId });
                         modelBuilder.Entity<SupermarketStapleFood> ().HasKey (ssf =>
                                 new { ssf.SuperMarketId, ssf.StapleFoodId });
+                        modelBuilder.Entity<EntreeIngredient>().HasKey(ei =>
+                              new { ei.EntreeId, ei.IngredientId });
                 }
         }
 }

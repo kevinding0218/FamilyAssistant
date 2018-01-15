@@ -51,6 +51,32 @@ namespace FamilyAssistant.Migrations
                     b.ToTable("Entree");
                 });
 
+            modelBuilder.Entity("FamilyAssistant.Core.Models.Meal.EntreeIngredient", b =>
+                {
+                    b.Property<int>("EntreeId");
+
+                    b.Property<int>("IngredientId");
+
+                    b.Property<int>("AddedByUserId");
+
+                    b.Property<DateTime>("AddedOn");
+
+                    b.Property<DateTime?>("LastUpdatedByOn");
+
+                    b.Property<int?>("LastUpdatedByUserId");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("EntreeId", "IngredientId");
+
+                    b.HasIndex("IngredientId");
+
+                    b.ToTable("EntreeIngredient");
+                });
+
             modelBuilder.Entity("FamilyAssistant.Core.Models.Meal.EntreeMeat", b =>
                 {
                     b.Property<int>("EntreeId");
@@ -101,6 +127,31 @@ namespace FamilyAssistant.Migrations
                     b.HasIndex("VegeId");
 
                     b.ToTable("EntreeVegetable");
+                });
+
+            modelBuilder.Entity("FamilyAssistant.Core.Models.Meal.Ingredient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AddedByUserId");
+
+                    b.Property<DateTime>("AddedOn");
+
+                    b.Property<DateTime?>("LastUpdatedByOn");
+
+                    b.Property<int?>("LastUpdatedByUserId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ingredient");
                 });
 
             modelBuilder.Entity("FamilyAssistant.Core.Models.Meal.MealType", b =>
@@ -363,6 +414,19 @@ namespace FamilyAssistant.Migrations
                         .WithMany("EntreesWithCurrentStapleFood")
                         .HasForeignKey("StapleFoodId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("FamilyAssistant.Core.Models.Meal.EntreeIngredient", b =>
+                {
+                    b.HasOne("FamilyAssistant.Core.Models.Meal.Entree", "Entree")
+                        .WithMany()
+                        .HasForeignKey("EntreeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FamilyAssistant.Core.Models.Meal.Ingredient", "Ingredient")
+                        .WithMany("EntreesWithCurrentIngredient")
+                        .HasForeignKey("IngredientId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FamilyAssistant.Core.Models.Meal.EntreeMeat", b =>
